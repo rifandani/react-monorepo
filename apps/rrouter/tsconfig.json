@@ -1,0 +1,29 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": [
+      "ESNext",
+      "DOM",
+      "DOM.Iterable",
+      "WebWorker"
+    ],
+    // "module": "ESNext",
+    "types": [
+      "vite/client"
+    ],
+    "noEmit": true
+  },
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ],
+  "exclude": [
+    "node_modules",
+    "dev-dist",
+    "dist",
+    "vite.config.*",
+    "playwright.config.*"
+  ]
+}
