@@ -1,6 +1,6 @@
+import { Link } from '@react-monorepo/core/src/components/ui/link'
 import { useColorMode } from '@react-monorepo/core/src/hooks/use-color-mode.hook'
 import { useAuthUserStore } from '@react-monorepo/rrouter/src/auth/hooks/use-auth-user-store.hook'
-import { Link } from '@react-monorepo/rrouter/src/core/components/ui/link'
 import { useI18n } from '@react-monorepo/rrouter/src/core/hooks/use-i18n.hook'
 
 export default function NotFound() {

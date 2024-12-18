@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import { getLocalTimeZone, today } from '@internationalized/date'
-import { buttonVariants } from '@react-monorepo/core/src/components/ui/button'
 import * as React from 'react'
 import {
   Button,
@@ -20,6 +19,7 @@ import {
   RangeCalendarStateContext,
 } from 'react-aria-components'
 import { twMerge } from 'tailwind-merge'
+import { buttonVariants } from './button'
 
 const _Calendar = Calendar
 

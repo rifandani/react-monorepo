@@ -2,11 +2,8 @@ import type { Route } from '@react-monorepo/rrouter/.react-router/types/src/todo
 import type { TodoListResponseSchema, TodoSchema } from '@react-monorepo/rrouter/src/todo/apis/todo.api'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Icon } from '@iconify/react'
-import { resourceListRequestSchema } from '@react-monorepo/core/src/schemas/api.schema'
-import { useAuthUserStore } from '@react-monorepo/rrouter/src/auth/hooks/use-auth-user-store.hook'
-import { Navbar } from '@react-monorepo/rrouter/src/core/components/navbar/navbar'
-import { Button } from '@react-monorepo/rrouter/src/core/components/ui/button'
-import { Checkbox } from '@react-monorepo/rrouter/src/core/components/ui/checkbox'
+import { Button } from '@react-monorepo/core/src/components/ui/button'
+import { Checkbox } from '@react-monorepo/core/src/components/ui/checkbox'
 import {
   DialogContent,
   DialogFooter,
@@ -14,10 +11,10 @@ import {
   DialogOverlay,
   DialogTitle,
   DialogTrigger,
-} from '@react-monorepo/rrouter/src/core/components/ui/dialog'
-import { Input } from '@react-monorepo/rrouter/src/core/components/ui/input'
-import { Label } from '@react-monorepo/rrouter/src/core/components/ui/label'
-import { Link } from '@react-monorepo/rrouter/src/core/components/ui/link'
+} from '@react-monorepo/core/src/components/ui/dialog'
+import { Input } from '@react-monorepo/core/src/components/ui/input'
+import { Label } from '@react-monorepo/core/src/components/ui/label'
+import { Link } from '@react-monorepo/core/src/components/ui/link'
 import {
   Select,
   SelectContent,
@@ -25,7 +22,10 @@ import {
   SelectPopover,
   SelectTrigger,
   SelectValue,
-} from '@react-monorepo/rrouter/src/core/components/ui/select'
+} from '@react-monorepo/core/src/components/ui/select'
+import { resourceListRequestSchema } from '@react-monorepo/core/src/schemas/api.schema'
+import { useAuthUserStore } from '@react-monorepo/rrouter/src/auth/hooks/use-auth-user-store.hook'
+import { Navbar } from '@react-monorepo/rrouter/src/core/components/navbar/navbar'
 import { useI18n } from '@react-monorepo/rrouter/src/core/hooks/use-i18n.hook'
 import { queryClient } from '@react-monorepo/rrouter/src/core/providers/query/client'
 import { checkAuthUser } from '@react-monorepo/rrouter/src/core/utils/checker.util'

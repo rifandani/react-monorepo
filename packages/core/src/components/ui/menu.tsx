@@ -1,44 +1,54 @@
-import type * as React from 'react'
+'use client'
+
+import type { VariantProps } from 'class-variance-authority'
+import type {
+  MenuItemProps as AriaMenuItemProps,
+  MenuProps as AriaMenuProps,
+  MenuTriggerProps as AriaMenuTriggerProps,
+  SeparatorProps as AriaSeparatorProps,
+  PopoverProps,
+} from 'react-aria-components'
+import type { buttonVariants } from './button'
 import { Icon } from '@iconify/react'
+import * as React from 'react'
 import {
-  Header,
-  Keyboard,
-  Menu,
-  MenuItem,
-  type MenuItemProps,
-  type MenuProps,
-  MenuTrigger,
-  Popover,
-  type PopoverProps,
-  Section,
-  Separator,
-  type SeparatorProps,
+  Header as AriaHeader,
+  Keyboard as AriaKeyboard,
+  Menu as AriaMenu,
+  MenuItem as AriaMenuItem,
+  MenuTrigger as AriaMenuTrigger,
+  Separator as AriaSeparator,
+  SubmenuTrigger as AriaSubmenuTrigger,
+  composeRenderProps,
 } from 'react-aria-components'
 import { twMerge } from 'tailwind-merge'
+import { Button } from './button'
+import { ListBoxCollection, ListBoxSection } from './list-box'
+import { SelectPopover } from './select'
 
-const _MenuTrigger = MenuTrigger
+const MenuTrigger = AriaMenuTrigger
 
-const MenuSection = Section
+const MenuSubTrigger = AriaSubmenuTrigger
 
-function MenuPopover({ className, offset = 4, ...props }: PopoverProps) {
+const MenuSection = ListBoxSection
+
+const MenuCollection = ListBoxCollection
+
+function MenuPopover({ className, ...props }: PopoverProps) {
   return (
-    <Popover
-      offset={offset}
-      className={values =>
-        twMerge(
-          'bg-popover text-popover-foreground data-[entering]:animate-in data-[exiting]:animate-out data-[entering]:fade-in-0 data-[exiting]:fade-out-0 data-[exiting]:zoom-out-95 data-[placement=bottom]:slide-in-from-top-2 data-[placement=left]:slide-in-from-right-2 data-[placement=right]:slide-in-from-left-2 data-[placement=top]:slide-in-from-bottom-2 z-50 rounded-md shadow-md',
-          typeof className === 'function' ? className(values) : className,
-        )}
+    <SelectPopover
+      className={composeRenderProps(className, className =>
+        twMerge('w-auto', className))}
       {...props}
     />
   )
 }
 
-function _Menu<T extends object>({ className, ...props }: MenuProps<T>) {
+function Menu<T extends object>({ className, ...props }: AriaMenuProps<T>) {
   return (
-    <Menu
+    <AriaMenu
       className={twMerge(
-        'max-h-[inherit] overflow-auto rounded-md border p-1 outline outline-0 [clip-path:inset(0_0_0_0_round_calc(var(--radius)-2px))]',
+        'max-h-[inherit] overflow-auto rounded-md p-1 outline outline-0 [clip-path:inset(0_0_0_0_round_calc(var(--radius)-2px))]',
         className,
       )}
       {...props}
@@ -46,27 +56,50 @@ function _Menu<T extends object>({ className, ...props }: MenuProps<T>) {
   )
 }
 
-interface _MenuItemProps extends MenuItemProps {
-  inset?: boolean
-  onClick?: () => void
-}
-
-function _MenuItem({ className, inset, ...props }: _MenuItemProps) {
+function MenuItem({ children, className, ...props }: AriaMenuItemProps) {
   return (
-    <MenuItem
-      className={values =>
+    <AriaMenuItem
+      textValue={
+        props.textValue || (typeof children === 'string' ? children : undefined)
+      }
+      className={composeRenderProps(className, className =>
         twMerge(
-          'data-[focused]:bg-accent data-[focused]:text-accent-foreground relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
-          inset && 'pl-8',
-          typeof className === 'function' ? className(values) : className,
-        )}
+          'relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors',
+          /* Disabled */
+          'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+          /* Focused */
+          'data-[focused]:bg-accent data-[focused]:text-accent-foreground ',
+          /* Selection Mode */
+          'data-[selection-mode]:pl-8',
+          className,
+        ))}
       {...props}
-    />
+    >
+      {composeRenderProps(children, (children, renderProps) => (
+        <>
+          <span className="absolute left-2 flex size-4 items-center justify-center">
+            {renderProps.isSelected && (
+              <>
+                {renderProps.selectionMode === 'single' && (
+                  <Icon icon="lucide:circle" className="size-2 fill-current" />
+                )}
+                {renderProps.selectionMode === 'multiple' && (
+                  <Icon icon="lucide:check" className="size-4" />
+                )}
+              </>
+            )}
+          </span>
+
+          {children}
+
+          {renderProps.hasSubmenu && <Icon icon="lucide:chevron-right" className="ml-auto size-4" />}
+        </>
+      ))}
+    </AriaMenuItem>
   )
 }
 
-export interface MenuHeaderProps
-  extends React.ComponentPropsWithoutRef<typeof Header> {
+interface MenuHeaderProps extends React.ComponentProps<typeof AriaHeader> {
   inset?: boolean
   separator?: boolean
 }
@@ -74,15 +107,15 @@ export interface MenuHeaderProps
 function MenuHeader({
   className,
   inset,
-  separator = false,
+  separator = true,
   ...props
 }: MenuHeaderProps) {
   return (
-    <Header
+    <AriaHeader
       className={twMerge(
-        'px-2 py-1.5 text-sm font-semibold',
+        'px-3 py-1.5 text-sm font-semibold',
         inset && 'pl-8',
-        separator && 'border-b-border -mx-1 mb-1 border-b px-3 pb-2.5',
+        separator && 'border-b-border -mx-1 mb-1 border-b pb-2.5',
         className,
       )}
       {...props}
@@ -90,9 +123,9 @@ function MenuHeader({
   )
 }
 
-function MenuSeparator({ className, ...props }: SeparatorProps) {
+function MenuSeparator({ className, ...props }: AriaSeparatorProps) {
   return (
-    <Separator
+    <AriaSeparator
       className={twMerge('bg-muted -mx-1 my-1 h-px', className)}
       {...props}
     />
@@ -102,80 +135,50 @@ function MenuSeparator({ className, ...props }: SeparatorProps) {
 function MenuKeyboard({
   className,
   ...props
-}: React.HTMLAttributes<HTMLSpanElement>) {
+}: React.ComponentProps<typeof AriaKeyboard>) {
   return (
-    <Keyboard
-      className={twMerge(
-        'ml-auto text-xs tracking-widest opacity-60',
-        className,
-      )}
+    <AriaKeyboard
+      className={twMerge('ml-auto text-xs tracking-widest opacity-60', className)}
       {...props}
     />
   )
 }
-
-function MenuCheckboxItem({ className, children, ...props }: MenuItemProps) {
-  return (
-    <MenuItem
-      className={values =>
-        twMerge(
-          'data-[focused]:bg-accent data-[focused]:text-accent-foreground relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
-          typeof className === 'function' ? className(values) : className,
-        )}
-      {...props}
-    >
-      {values => (
-        <>
-          <span className="absolute left-2 flex size-4 items-center justify-center">
-            {values.isSelected && (
-              <Icon icon="lucide:check" className="size-4" />
-            )}
-          </span>
-
-          {typeof children === 'function' ? children(values) : children}
-        </>
-      )}
-    </MenuItem>
-  )
+interface JollyMenuProps<T>
+  extends AriaMenuProps<T>,
+  VariantProps<typeof buttonVariants>,
+  Omit<AriaMenuTriggerProps, 'children'> {
+  label?: string
 }
-
-function MenuRadioItem({ className, children, ...props }: MenuItemProps) {
+function JollyMenu<T extends object>({
+  label,
+  children,
+  variant,
+  size,
+  ...props
+}: JollyMenuProps<T>) {
   return (
-    <MenuItem
-      className={values =>
-        twMerge(
-          'data-[focused]:bg-accent data-[focused]:text-accent-foreground relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
-          typeof className === 'function' ? className(values) : className,
-        )}
-      {...props}
-    >
-      {values => (
-        <>
-          <span
-            className="absolute left-2 flex size-3.5 items-center justify-center"
-            data-is-selected={values.isSelected}
-          >
-            {values.isSelected && (
-              <Icon icon="lucide:circle" className="size-2 fill-current" />
-            )}
-          </span>
-          {typeof children === 'function' ? children(values) : children}
-        </>
-      )}
-    </MenuItem>
+    <MenuTrigger {...props}>
+      <Button variant={variant} size={size}>
+        {label}
+      </Button>
+      <MenuPopover className="min-w-[--trigger-width]">
+        <Menu {...props}>{children}</Menu>
+      </MenuPopover>
+    </MenuTrigger>
   )
 }
 
 export {
-  _Menu as Menu,
-  MenuCheckboxItem,
+  JollyMenu,
+  Menu,
+  MenuCollection,
   MenuHeader,
-  _MenuItem as MenuItem,
+  MenuItem,
   MenuKeyboard,
   MenuPopover,
-  MenuRadioItem,
   MenuSection,
   MenuSeparator,
-  _MenuTrigger as MenuTrigger,
+  MenuSubTrigger,
+  MenuTrigger,
 }
-export type { _MenuItemProps as MenuItemProps }
+export type { JollyMenuProps, MenuHeaderProps }

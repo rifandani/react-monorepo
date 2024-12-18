@@ -1,7 +1,7 @@
 import type { VariantProps } from 'class-variance-authority'
-import { buttonVariants } from '@react-monorepo/core/src/components/ui/button'
 import { Link, type LinkProps } from 'react-aria-components'
 import { twMerge } from 'tailwind-merge'
+import { buttonVariants } from './button'
 
 interface _LinkProps extends LinkProps, VariantProps<typeof buttonVariants> {}
 
