@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import React from 'react'
 
 interface Props {
   seconds: number
@@ -18,7 +18,7 @@ export function Clock({ seconds, minutes, hours }: Props) {
 
       {/* <!-- markers --> */}
       {[0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55].map(minute => (
-        <Fragment key={minute}>
+        <React.Fragment key={minute}>
           <line
             className="stroke-slate-700 stroke-1"
             y1="35"
@@ -35,7 +35,7 @@ export function Clock({ seconds, minutes, hours }: Props) {
               transform={`rotate(${6 * (minute + offset)})`}
             />
           ))}
-        </Fragment>
+        </React.Fragment>
       ))}
 
       {/* <!-- hour hand --> */}
