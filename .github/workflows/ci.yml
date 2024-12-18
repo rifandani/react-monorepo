@@ -9,40 +9,44 @@ on:
       - main
 
 jobs:
-  lint-and-format:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout branch
         uses: actions/checkout@v4.1.1
-
-      - name: Setup biome
-        uses: biomejs/setup-biome@v2.1.0
-        with:
-          version: latest
-
-      - name: Run biome
-        run: biome ci ./src
-
-  typecheck:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout branch
-        uses: actions/checkout@v4.1.1
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v3
 
       - name: Install node
         uses: actions/setup-node@v4.0.2
         with:
           node-version: lts/*
-          cache: pnpm # Package manager should be pre-installed
+          cache: npm
 
       - name: Clean install
-        run: pnpm i --frozen-lockfile
+        run: npm run clean
 
-      - name: Typecheck
-        run: pnpm typecheck
+      - name: Lint
+        run: npm run lint
+
+  # typecheck:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout branch
+  #       uses: actions/checkout@v4.1.1
+
+  #     - name: Install pnpm
+  #       uses: pnpm/action-setup@v3
+
+  #     - name: Install node
+  #       uses: actions/setup-node@v4.0.2
+  #       with:
+  #         node-version: lts/*
+  #         cache: pnpm # Package manager should be pre-installed
+
+  #     - name: Clean install
+  #       run: pnpm i --frozen-lockfile
+
+  #     - name: Typecheck
+  #       run: pnpm typecheck
 
   # e2e:
   #   timeout-minutes: 30

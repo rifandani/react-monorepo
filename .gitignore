@@ -1,12 +1,12 @@
 # testing
-/test-results/
-/playwright-test-results/
-/playwright-report/
-/playwright/
-/blob-report/
-/playwright/.cache/
-/coverage
-/html
+test-results
+playwright-test-results
+playwright-report
+playwright
+blob-report
+playwright.cache
+coverage
+html
 stats.html
 .react-router
 
