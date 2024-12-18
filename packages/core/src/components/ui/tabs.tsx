@@ -10,7 +10,7 @@ import { twMerge } from 'tailwind-merge'
 const Tabs = _Tabs
 
 const TabList = React.forwardRef<
-  React.ElementRef<typeof _TabList>,
+  React.ComponentRef<typeof _TabList>,
   React.ComponentPropsWithoutRef<typeof _TabList>
 >(({ className, ...props }, ref) => (
   <_TabList
@@ -26,7 +26,7 @@ const TabList = React.forwardRef<
 TabList.displayName = 'TabList'
 
 const Tab = React.forwardRef<
-  React.ElementRef<typeof _Tab>,
+  React.ComponentRef<typeof _Tab>,
   React.ComponentPropsWithoutRef<typeof _Tab>
 >(({ className, ...props }, ref) => (
   <_Tab
@@ -42,7 +42,7 @@ const Tab = React.forwardRef<
 Tab.displayName = 'Tab'
 
 const TabPanel = React.forwardRef<
-  React.ElementRef<typeof _TabPanel>,
+  React.ComponentRef<typeof _TabPanel>,
   React.ComponentPropsWithoutRef<typeof _TabPanel>
 >(({ className, ...props }, ref) => (
   <_TabPanel
