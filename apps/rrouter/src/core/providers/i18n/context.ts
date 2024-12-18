@@ -1,4 +1,4 @@
-import type { LocaleDictLanguage } from '@react-monorepo/rrouter/src/core/locales/locale.type'
+import type { LocaleDictLanguage } from '@react-monorepo/core/src/locales/locale.type'
 import React, { createContext, useState } from 'react'
 
 export type I18nContextInterface = ReturnType<typeof useI18nContext>

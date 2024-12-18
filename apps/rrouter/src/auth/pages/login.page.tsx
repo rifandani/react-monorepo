@@ -2,6 +2,7 @@ import type { ErrorResponseSchema } from '@react-monorepo/core/src/schemas/api.s
 import type { Route } from '@react-monorepo/rrouter/.react-router/types/src/auth/pages/+types/login.page'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Icon } from '@iconify/react'
+import reactjs from '@react-monorepo/core/src/assets/images/reactjs.svg'
 import { Button } from '@react-monorepo/core/src/components/ui/button'
 import { Input } from '@react-monorepo/core/src/components/ui/input'
 import { Label } from '@react-monorepo/core/src/components/ui/label'
@@ -12,7 +13,6 @@ import {
   authRepositories,
 } from '@react-monorepo/rrouter/src/auth/apis/auth.api'
 import { useAuthUserStore } from '@react-monorepo/rrouter/src/auth/hooks/use-auth-user-store.hook'
-import reactjs from '@react-monorepo/rrouter/src/core/assets/images/reactjs.svg'
 import { RouteErrorBoundary } from '@react-monorepo/rrouter/src/core/components/route-error-boundary'
 import { useI18n } from '@react-monorepo/rrouter/src/core/hooks/use-i18n.hook'
 import { checkAuthUser } from '@react-monorepo/rrouter/src/core/utils/checker.util'

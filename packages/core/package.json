@@ -11,6 +11,7 @@
   "peerDependencies": {
     "@tanstack/react-query": "*",
     "radashi": "*",
+    "react": "*",
     "type-fest": "*",
     "zod": "*",
     "zustand": "*"

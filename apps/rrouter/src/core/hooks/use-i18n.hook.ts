@@ -1,5 +1,5 @@
-import type { Formatter } from '@react-monorepo/rrouter/src/core/locales/locale.type'
-import { localeDict } from '@react-monorepo/rrouter/src/core/locales'
+import type { Formatter } from '@react-monorepo/core/src/locales/locale.type'
+import { localeDict } from '@react-monorepo/core/src/locales'
 import { I18nContext } from '@react-monorepo/rrouter/src/core/providers/i18n/context'
 import { useContext } from 'react'
 import { useMessageFormatter } from 'react-aria'
