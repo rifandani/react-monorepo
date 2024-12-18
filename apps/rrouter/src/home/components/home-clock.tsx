@@ -3,7 +3,6 @@ import { useRafInterval } from '@react-monorepo/core/src/hooks/use-raf-interval.
 import { Clock } from '@react-monorepo/rrouter/src/core/components/clock'
 import { Button, type ButtonVariantProps } from '@react-monorepo/rrouter/src/core/components/ui/button'
 import { useI18n } from '@react-monorepo/rrouter/src/core/hooks/use-i18n.hook'
-import { todosPath } from '@react-monorepo/rrouter/src/todo/routes'
 import { shuffle } from 'radashi'
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
@@ -72,7 +71,7 @@ export function HomeClock() {
                 setButtons(prev => shuffle(prev) as unknown as typeof prev)
               else if (btn.id === 'clock')
                 setShowClock(prev => !prev)
-              else navigate(todosPath.root)
+              else navigate('/todos')
             }}
           >
             {t(btn.text)}

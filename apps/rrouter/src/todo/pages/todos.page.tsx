@@ -1,10 +1,10 @@
-import type { queryClient } from '@react-monorepo/rrouter/src/core/providers/query/client'
+import type { Route } from '@react-monorepo/rrouter/.react-router/types/src/todo/pages/+types/todos.page'
 import type { TodoListResponseSchema, TodoSchema } from '@react-monorepo/rrouter/src/todo/apis/todo.api'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Icon } from '@iconify/react'
 import { resourceListRequestSchema } from '@react-monorepo/core/src/schemas/api.schema'
 import { useAuthUserStore } from '@react-monorepo/rrouter/src/auth/hooks/use-auth-user-store.hook'
-import { authPath } from '@react-monorepo/rrouter/src/auth/routes'
+import { Navbar } from '@react-monorepo/rrouter/src/core/components/navbar/navbar'
 import { Button } from '@react-monorepo/rrouter/src/core/components/ui/button'
 import { Checkbox } from '@react-monorepo/rrouter/src/core/components/ui/checkbox'
 import {
@@ -27,6 +27,7 @@ import {
   SelectValue,
 } from '@react-monorepo/rrouter/src/core/components/ui/select'
 import { useI18n } from '@react-monorepo/rrouter/src/core/hooks/use-i18n.hook'
+import { queryClient } from '@react-monorepo/rrouter/src/core/providers/query/client'
 import { checkAuthUser } from '@react-monorepo/rrouter/src/core/utils/checker.util'
 import { todoKeys, todoRepositories, todoSchema } from '@react-monorepo/rrouter/src/todo/apis/todo.api'
 import { todosDefaults } from '@react-monorepo/rrouter/src/todo/constants/todos.constant'
@@ -38,7 +39,6 @@ import { random } from 'radashi'
 import { GridList, GridListItem } from 'react-aria-components'
 import { useForm } from 'react-hook-form'
 import {
-  type LoaderFunctionArgs,
   redirect,
   useBlocker,
   useHref,
@@ -70,45 +70,47 @@ const searchParamsSchema = resourceListRequestSchema
       .transform(value => Number(value)),
   })
 
-export function loader(_queryClient: typeof queryClient) {
-  return async ({ request }: LoaderFunctionArgs) => {
-    const authed = checkAuthUser()
+export async function clientLoader({ request }: Route.ClientLoaderArgs) {
+  const authed = checkAuthUser()
 
-    // redirect NOT authed user to login
-    if (!authed) {
-      toast.error('Unauthorized')
-      return redirect(authPath.login)
-    }
-
-    const url = new URL(request.url)
-    const searchParams = Object.fromEntries(url.searchParams)
-    const parsedSearchParams = searchParamsSchema.parse(searchParams)
-
-    const todos = await _queryClient.ensureQueryData({
-      queryKey: todoKeys.list(parsedSearchParams),
-      queryFn: () => todoRepositories.list(parsedSearchParams),
-      staleTime: 1_000 * 60 * 1, // 1 min
-    })
-
-    return todos
+  // redirect NOT authed user to login
+  if (!authed) {
+    toast.error('Unauthorized')
+    return redirect('/login')
   }
+
+  const url = new URL(request.url)
+  const searchParams = Object.fromEntries(url.searchParams)
+  const parsedSearchParams = searchParamsSchema.parse(searchParams)
+
+  const todos = await queryClient.ensureQueryData({
+    queryKey: todoKeys.list(parsedSearchParams),
+    queryFn: () => todoRepositories.list(parsedSearchParams),
+    staleTime: 1_000 * 60 * 1, // 1 min
+  })
+
+  return todos
 }
 
-export function Element() {
+export default function Todos() {
   const [t] = useI18n()
 
   return (
-    <div className="container mx-auto flex flex-col py-5 duration-300">
-      <h1 className="text-3xl font-medium sm:text-4xl">
-        {t('xList', { feature: 'Todo' })}
-      </h1>
+    <>
+      <Navbar />
 
-      <section className="w-full pt-5">
-        <TodosCreate />
-        <TodosFilter />
-        <TodosList />
-      </section>
-    </div>
+      <main className="container mx-auto flex flex-col py-5 duration-300">
+        <h1 className="text-3xl font-medium sm:text-4xl">
+          {t('xList', { feature: 'Todo' })}
+        </h1>
+
+        <section className="w-full pt-5">
+          <TodosCreate />
+          <TodosFilter />
+          <TodosList />
+        </section>
+      </main>
+    </>
   )
 }
 

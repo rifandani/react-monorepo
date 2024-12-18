@@ -1,5 +1,5 @@
 import type { ErrorResponseSchema } from '@react-monorepo/core/src/schemas/api.schema'
-import type { ActionFunction, LoaderFunction } from 'react-router'
+import type { Route } from '@react-monorepo/rrouter/.react-router/types/src/auth/pages/+types/login.page'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Icon } from '@iconify/react'
 import {
@@ -9,22 +9,21 @@ import {
 } from '@react-monorepo/rrouter/src/auth/apis/auth.api'
 import { useAuthUserStore } from '@react-monorepo/rrouter/src/auth/hooks/use-auth-user-store.hook'
 import reactjs from '@react-monorepo/rrouter/src/core/assets/images/reactjs.svg'
+import { RouteErrorBoundary } from '@react-monorepo/rrouter/src/core/components/route-error-boundary'
 import { Button } from '@react-monorepo/rrouter/src/core/components/ui/button'
 import { Input } from '@react-monorepo/rrouter/src/core/components/ui/input'
 import { Label } from '@react-monorepo/rrouter/src/core/components/ui/label'
 import { Link } from '@react-monorepo/rrouter/src/core/components/ui/link'
 import { useI18n } from '@react-monorepo/rrouter/src/core/hooks/use-i18n.hook'
 import { checkAuthUser } from '@react-monorepo/rrouter/src/core/utils/checker.util'
-import { homePath } from '@react-monorepo/rrouter/src/home/routes'
 import { HTTPError } from 'ky'
 import { FieldError, TextField } from 'react-aria-components'
-import { unstable_batchedUpdates } from 'react-dom'
 import { Controller, useForm } from 'react-hook-form'
 import { redirect, useFetcher } from 'react-router'
 import { toast } from 'sonner'
 import { ZodError } from 'zod'
 
-export const action: ActionFunction = async ({ request }) => {
+export async function clientAction({ request }: Route.ClientActionArgs) {
   if (request.method === 'POST') {
     const formdata = await request.formData()
     const payload = Object.fromEntries(formdata)
@@ -38,11 +37,8 @@ export const action: ActionFunction = async ({ request }) => {
       // will throw if `login` returns 4xx/5xx error, therefore `errorElement` will be rendered
       const loginResponse = await authRepositories.login({ json: parsed.data })
 
-      // see https://docs.pmnd.rs/zustand/recipes/recipes#calling-actions-outside-a-react-event-handler
-      unstable_batchedUpdates(() => {
-        useAuthUserStore.getState().setUser(loginResponse) // set user data to store
-      })
-      return redirect(homePath.root)
+      useAuthUserStore.getState().setUser(loginResponse) // set user data to store
+      return redirect('/')
     }
     catch (error) {
       if (error instanceof HTTPError) {
@@ -59,23 +55,25 @@ export const action: ActionFunction = async ({ request }) => {
   return new Response('Not Implemented', { status: 501 })
 }
 
-export const loader: LoaderFunction = () => {
+export async function clientLoader() {
   const authed = checkAuthUser()
 
   // redirect auth user to home
   if (authed) {
     toast.info('Already Logged In')
-    return redirect(homePath.root)
+    return redirect('/')
   }
 
   return null
 }
 
-export function Element() {
+export const ErrorBoundary = RouteErrorBoundary
+
+export default function Login() {
   const [t] = useI18n()
 
   return (
-    <div className="flex min-h-screen w-full">
+    <main className="flex min-h-screen w-full">
       {/* form */}
       <section className="flex min-h-screen w-full flex-col justify-center px-10 md:w-1/2 xl:px-20">
         <h1 className="text-primary text-center text-3xl">{t('welcome')}</h1>
@@ -108,7 +106,7 @@ export function Element() {
           />
         </span>
       </section>
-    </div>
+    </main>
   )
 }
 

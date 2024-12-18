@@ -8,8 +8,13 @@
       "DOM.Iterable",
       "WebWorker"
     ],
+    "rootDirs": [
+      ".",
+      "./.react-router/types"
+    ],
     // "module": "ESNext",
     "types": [
+      "@react-router/node",
       "vite/client"
     ],
     "noEmit": true
@@ -19,6 +24,7 @@
       "path": "./tsconfig.node.json"
     }
   ],
+  "include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx", ".react-router/types/**/*"],
   "exclude": [
     "node_modules",
     "dev-dist",

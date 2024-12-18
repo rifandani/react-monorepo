@@ -2,8 +2,8 @@ import type { RollupReplaceOptions } from '@rollup/plugin-replace'
 import type { ManifestOptions, VitePWAOptions } from 'vite-plugin-pwa'
 import path from 'node:path'
 import process from 'node:process'
+import { reactRouter } from '@react-router/dev/vite'
 import replace from '@rollup/plugin-replace'
-import react from '@vitejs/plugin-react'
 import autoprefixer from 'autoprefixer'
 import { visualizer } from 'rollup-plugin-visualizer'
 import tailwind from 'tailwindcss'
@@ -96,7 +96,7 @@ export default defineConfig({
   },
   plugins: [
     replace(replaceOptions) as unknown as PluginOption,
-    react(),
+    reactRouter(),
     visualizer({
       filename: 'html/visualizer-stats.html',
     }) as unknown as PluginOption,

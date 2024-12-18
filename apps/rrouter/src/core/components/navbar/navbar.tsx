@@ -1,7 +1,6 @@
 import type { LocaleDictLanguage } from '@react-monorepo/core/src/locales/locale.type'
 import { Icon } from '@iconify/react'
 import { useAuthUserStore } from '@react-monorepo/rrouter/src/auth/hooks/use-auth-user-store.hook'
-import { authPath, loginRoute } from '@react-monorepo/rrouter/src/auth/routes'
 import { SvgIcon } from '@react-monorepo/rrouter/src/core/components/svg-icon'
 import { Avatar, AvatarFallback } from '@react-monorepo/rrouter/src/core/components/ui/avatar'
 import { Button } from '@react-monorepo/rrouter/src/core/components/ui/button'
@@ -22,8 +21,6 @@ import {
   MenuTrigger,
 } from '@react-monorepo/rrouter/src/core/components/ui/menu'
 import { useI18n } from '@react-monorepo/rrouter/src/core/hooks/use-i18n.hook'
-import { homeRoute } from '@react-monorepo/rrouter/src/home/routes'
-import { todosRoute } from '@react-monorepo/rrouter/src/todo/routes'
 import { Link, type Selection, useLocale } from 'react-aria-components'
 import { useNavigate } from 'react-router'
 import { NavbarMenuTheme } from './navbar-menu-theme'
@@ -86,7 +83,7 @@ function NavbarMenuProfile() {
 
             if (currentKey === 'logout') {
               clearUser() // clear user store
-              navigate(authPath.login) // back to login page
+              navigate('') // back to login page
             }
           }}
         >
@@ -124,7 +121,7 @@ export function Navbar() {
 
   return (
     <nav className="flex items-center justify-between border-b p-2.5 shadow-sm">
-      <Link href={homeRoute.path} className="flex items-center">
+      <Link href="/" className="flex items-center">
         <SvgIcon id="icon-reactjs" className="size-6" />
         <span className="ml-2 text-2xl font-semibold">{t('appName')}</span>
       </Link>
@@ -150,8 +147,8 @@ export function Navbar() {
             <DialogHeader className="text-left">
               <SvgIcon id="icon-reactjs" className="mb-6 size-6" />
 
-              <Link href={homeRoute.path}>Home</Link>
-              <Link href={todosRoute.path}>Todos</Link>
+              <Link href="/">Home</Link>
+              <Link href="/todos">Todos</Link>
             </DialogHeader>
 
             <DialogFooter>
@@ -159,7 +156,7 @@ export function Navbar() {
                 className="gap-x-2"
                 onPress={() => {
                   clearUser() // reset `user` store
-                  navigate(loginRoute.path) // back to login
+                  navigate('/login') // back to login
                 }}
               >
                 <Icon icon="lucide:log-out" />

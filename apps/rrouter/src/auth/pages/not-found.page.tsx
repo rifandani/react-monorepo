@@ -1,11 +1,9 @@
 import { useColorMode } from '@react-monorepo/core/src/hooks/use-color-mode.hook'
 import { useAuthUserStore } from '@react-monorepo/rrouter/src/auth/hooks/use-auth-user-store.hook'
-import { authPath } from '@react-monorepo/rrouter/src/auth/routes'
 import { Link } from '@react-monorepo/rrouter/src/core/components/ui/link'
 import { useI18n } from '@react-monorepo/rrouter/src/core/hooks/use-i18n.hook'
-import { homePath } from '@react-monorepo/rrouter/src/home/routes'
 
-export function Element() {
+export default function NotFound() {
   const userStore = useAuthUserStore()
   const [t] = useI18n()
   useColorMode({})
@@ -18,7 +16,7 @@ export function Element() {
       <p className="">{t('gone')}</p>
 
       <Link
-        href={userStore.user ? homePath.root : authPath.login}
+        href={userStore.user ? '/' : '/login'}
         className="mt-10 transition duration-300 hover:skew-x-12"
       >
         {t('backTo', { target: userStore.user ? 'home' : 'login' })}

@@ -66,6 +66,7 @@ export default antfu(
       '**/coverage/**',
       '**/__mocks__/**',
       '**/.next/**',
+      '**/.react-router/**',
       '.vscode/**',
       '.husky/**',
       'babel.config.js',

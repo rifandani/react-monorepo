@@ -14,12 +14,12 @@
     "node": ">=22.9.0"
   },
   "scripts": {
-    "next:dev": "pnpm --filter @react-monorepo/next run dev",
+    "next:dev": "npm run dev -w @react-monorepo/next",
     "rrouter:dev": "npm run dev -w @react-monorepo/rrouter",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "lint:inspector": "eslint --inspect-config",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "npm run typegen -w @react-monorepo/rrouter && tsc --noEmit --skipLibCheck",
     "regression": "run-p lint typecheck",
     "clean": "find . \\( -name node_modules -type d -o -name dev-dist -type d -o -name dist -type d -o -name html -type d -o -name playwright -type d -o -name playwright-report -type d -o -name playwright-test-results -type d -name package-lock.json -type f \\) | xargs rm -rf && npm install",
     "prepare": "husky"
