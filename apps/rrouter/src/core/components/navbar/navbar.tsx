@@ -1,14 +1,16 @@
 import type { LocaleDictLanguage } from '@react-monorepo/core/src/locales/locale.type'
 import { Icon } from '@iconify/react'
-import { Avatar, AvatarFallback } from '@react-monorepo/core/src/components/ui/avatar'
-import { Button } from '@react-monorepo/core/src/components/ui/button'
+import { useAuthUserStore } from '@react-monorepo/rrouter/src/auth/hooks/use-auth-user-store.hook'
+import { SvgIcon } from '@react-monorepo/rrouter/src/core/components/svg-icon'
+import { Avatar, AvatarFallback } from '@react-monorepo/rrouter/src/core/components/ui/avatar'
+import { Button } from '@react-monorepo/rrouter/src/core/components/ui/button'
 import {
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogOverlay,
   DialogTrigger,
-} from '@react-monorepo/core/src/components/ui/dialog'
+} from '@react-monorepo/rrouter/src/core/components/ui/dialog'
 import {
   Menu,
   MenuHeader,
@@ -17,9 +19,7 @@ import {
   MenuSection,
   MenuSeparator,
   MenuTrigger,
-} from '@react-monorepo/core/src/components/ui/menu'
-import { useAuthUserStore } from '@react-monorepo/rrouter/src/auth/hooks/use-auth-user-store.hook'
-import { SvgIcon } from '@react-monorepo/rrouter/src/core/components/svg-icon'
+} from '@react-monorepo/rrouter/src/core/components/ui/menu'
 import { useI18n } from '@react-monorepo/rrouter/src/core/hooks/use-i18n.hook'
 import { Link, type Selection, useLocale } from 'react-aria-components'
 import { useNavigate } from 'react-router'

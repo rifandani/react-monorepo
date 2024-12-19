@@ -47,6 +47,7 @@
   "exclude": [
     "node_modules",
     "**/dev-dist",
-    "**/dist"
+    "**/dist",
+    "**/.react-router"
   ]
 }

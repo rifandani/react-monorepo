@@ -1,4 +1,4 @@
-import { Button } from '@react-monorepo/core/src/components/ui/button'
+import { Button } from '@react-monorepo/rrouter/src/core/components/ui/button'
 import { isRouteErrorResponse, useRouteError } from 'react-router'
 
 export function RouteErrorBoundary() {

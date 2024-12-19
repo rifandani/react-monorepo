@@ -1,6 +1,10 @@
 import type { Selection } from 'react-aria-components'
 import { Icon } from '@iconify/react'
-import { Button } from '@react-monorepo/core/src/components/ui/button'
+import {
+  type BasicColorMode,
+  useColorMode,
+} from '@react-monorepo/core/src/hooks/use-color-mode.hook'
+import { Button } from '@react-monorepo/rrouter/src/core/components/ui/button'
 import {
   Menu,
   MenuHeader,
@@ -8,11 +12,7 @@ import {
   MenuPopover,
   MenuSection,
   MenuTrigger,
-} from '@react-monorepo/core/src/components/ui/menu'
-import {
-  type BasicColorMode,
-  useColorMode,
-} from '@react-monorepo/core/src/hooks/use-color-mode.hook'
+} from '@react-monorepo/rrouter/src/core/components/ui/menu'
 import { useI18n } from '@react-monorepo/rrouter/src/core/hooks/use-i18n.hook'
 import { useToaster } from '@react-monorepo/rrouter/src/core/hooks/use-toaster.hook'
 

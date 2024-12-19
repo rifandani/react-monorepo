@@ -1,6 +1,6 @@
 import { useAutoAnimate } from '@formkit/auto-animate/react'
-import { Button, type ButtonVariantProps } from '@react-monorepo/core/src/components/ui/button'
 import { useRafInterval } from '@react-monorepo/core/src/hooks/use-raf-interval.hook'
+import { Button, type ButtonVariantProps } from '@react-monorepo/rrouter/src/core/components/ui/button'
 import { useI18n } from '@react-monorepo/rrouter/src/core/hooks/use-i18n.hook'
 import { shuffle } from 'radashi'
 import { useState } from 'react'
