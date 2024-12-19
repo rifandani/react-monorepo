@@ -44,6 +44,11 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
 
+    /* Reduce animation motion from frammer motion. See https://motion.dev/docs/react-accessibility */
+    // contextOptions: {
+    //   reducedMotion: 'reduce',
+    // },
+
     /* Populates context with given storage state */
     storageState: 'e2e/.auth/user.json',
   },
@@ -103,7 +108,7 @@ export default defineConfig({
   webServer: {
     url: baseURL,
     // in CI, we run `build-and-preview` instead of `dev`
-    command: process.env.CI ? 'pnpm build-and-preview' : 'pnpm dev',
+    command: process.env.CI ? 'npm run build-and-preview' : 'npm run dev',
     reuseExistingServer: !process.env.CI,
     stdout: 'pipe',
     stderr: 'pipe',

@@ -103,10 +103,7 @@ test.describe('unauthorized', () => {
     const appUser = await page.evaluate(
       () => localStorage.getItem('app-user') as string,
     )
-    expect(JSON.parse(appUser)).toEqual({
-      version: 0,
-      state: { user: null },
-    })
+    expect(JSON.parse(appUser)).toEqual(null)
     await expect(errorAlert).toBeVisible()
   })
 })
